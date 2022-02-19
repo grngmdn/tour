@@ -17,6 +17,16 @@ function App() {
     setLoading(false)
   },[])
 
+  function removeTour(id){
+
+    const newTours = tours.filter(
+      (tour) => tour.id !== id 
+    )
+    return(
+      setTours(newTours)
+    )
+  }
+
   if(loading) {
     return(
       <h1>
@@ -25,9 +35,23 @@ function App() {
     )
   }
 
+  if(tours.length === 0) {
+    return(
+      <div>
+        <h1>
+          No Tours left
+        </h1>
+        <button onClick={() => useEffect()}>
+          refresh
+        </button>
+      </div>
+
+    )
+  }
+
   return (
       <div>
-        <Tours tours={tours} />
+        <Tours tours={tours} removeTour={removeTour}/>
         {console.log(tours)}
       </div>
   );
