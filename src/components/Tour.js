@@ -1,30 +1,68 @@
 import React, { useState } from 'react'
+import Button from '@mui/material/Button';
+import { Card, CardActionArea, CardActions, CardContent, CardMedia, Typography } from '@mui/material';
+import { Box } from '@mui/system';
+
 
 function Tour({id, image, info, price, name, removeTour}) {
 
     const [readMore, setReadMore] = useState(false)
 
   return (
-    <div>
-        <article>
-            <img src={image} width="100px" />
-            <footer>
-                <div>
-                    <h4>{name}</h4>
-                    <h4>$ {price}</h4>
-                </div>
-                <p>
-                    {readMore ? info : `${info.substring(0,200)}...`}
-                    <button onClick={() => setReadMore(!readMore)}>
-                        {readMore ? "less info" : "more info"}
-                    </button>
-                </p>
-                <button onClick={() => {
-                    removeTour(id)
-                }}>Not interested</button>
-            </footer>
-        </article><br />
-    </div>
+    <Box>
+        <Card
+            sx={{ 
+                maxWidth: 580,
+                paddingBottom:"25px" 
+            }}
+        >
+            <CardActionArea>
+                <CardMedia
+                    component="img"
+                    height="140"
+                    image={image}
+                    alt="image tour"
+                />
+                <CardContent>
+                    <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        paddingBottom="20px"
+                    >
+                        <Typography
+                            variant='h6'
+                        >
+                            {name}
+                        </Typography>
+                        <Typography
+                            color="textSecondary"
+                        >
+                            $ {price}
+                        </Typography>
+                    </Box>
+                    <Typography
+                        variant='body1'
+                    >
+                        {readMore ? info : `${info.substring(0,200)}...`}
+                        <Button 
+                            onClick={() => setReadMore(!readMore)}
+                        >
+                            {readMore ? "less info" : "more info"}
+                        </Button>
+                    </Typography>
+                </CardContent>
+            </CardActionArea>
+                <CardActions>
+                    <Button 
+                        onClick={() => {
+                        removeTour(id)
+                        }}
+                        variant="contained"
+                    >Not interested
+                    </Button>
+                </CardActions>
+        </Card><br />
+    </Box>
   )
 }
 

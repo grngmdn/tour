@@ -9,24 +9,22 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [tours, setTours] = useState([])
 
-  useEffect(() => { 
+
+  // fetch logic to get data from an api
+  const fetchTours = () => {
     setLoading(true)
-    const fetchTours = fetch(url)
+    fetch(url)
     .then(res => res.json())
     .then(data => setTours(data))
     setLoading(false)
-  },[])
-
-  function removeTour(id){
-
-    const newTours = tours.filter(
-      (tour) => tour.id !== id 
-    )
-    return(
-      setTours(newTours)
-    )
   }
 
+  useEffect(() => { 
+    fetchTours()
+  },[])
+
+
+  // logic to show "loading..." before fetching data
   if(loading) {
     return(
       <h1>
@@ -35,17 +33,28 @@ function App() {
     )
   }
 
+  // logic to refresh tour once all the tour has been removed
   if(tours.length === 0) {
     return(
       <div>
         <h1>
           No Tours left
         </h1>
-        <button onClick={() => useEffect()}>
+        <button onClick={() => fetchTours()}>
           refresh
         </button>
       </div>
+    )
+  }
 
+  // logic to remove individual tour
+  function removeTour(id){
+
+    const newTours = tours.filter(
+      (tour) => tour.id !== id 
+    )
+    return(
+      setTours(newTours)
     )
   }
 
